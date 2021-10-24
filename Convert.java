@@ -3,36 +3,163 @@ A Java program that does currency conversion for some popular currencies.
 *Written by: Vlad Mihai Cranga.
 */
 
-import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.Toolkit;
-import java.awt.Container;
+import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 
-public class Convert extends JFrame
+public class Convert extends JFrame implements MouseListener
 {
+    // currency values
+    double usd_gbp = 0.73;
+    double usd_eur = 0.86;
+    double gbp_usd = 1.38;
+    double gbp_eur = 1.18;
+    double eur_usd = 1.16;
+    double eur_gbp = 0.85;
+    
+    // variables used in mousePressed
+    JComboBox fromCurrencies;
+    JComboBox toCurrencies;
+    JLabel result;
+    JTextField value;
+
     public Convert()
     {
         // frame properties
         setTitle("Currency Converter");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
         setVisible(true);
 
-        // place the frame in the centre
+        // place the frame in the centre of the screen
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         Dimension screenDimension = toolkit.getScreenSize();
-        setSize(screenDimension.width/2, screenDimension.height/2);
+        setSize(screenDimension.width/3, screenDimension.height/2);
         setLocation(new Point(screenDimension.width/4, screenDimension.height/4));
 
-        // frame content
+        // frame layout
         Container contentPane = getContentPane();
+        contentPane.setLayout(new BorderLayout());
 
-        JButton button = new JButton("Convert");
-        contentPane.add(button);
+        // frame content
+        JLabel title = new JLabel("<html>Currency Converter<br><br></html>", JLabel.CENTER);
+        contentPane.add(title, BorderLayout.NORTH);
+
+        JPanel centreContent = new JPanel();
+        centreContent.setLayout(new BoxLayout(centreContent, BoxLayout.Y_AXIS));
+
+        JLabel convertFrom = new JLabel("<html>Select the currency to convert from:<br><br></html>");
+        centreContent.add(convertFrom);
+
+        String[] currencies = {"USD", "GBP", "EUR"};
+        fromCurrencies = new JComboBox(currencies);
+        fromCurrencies.setSelectedItem(currencies[0]);
+        centreContent.add(fromCurrencies);
+
+        JLabel convertTo = new JLabel("<html>Select the currency to convert to:<br><br></html>");
+        centreContent.add(convertTo);
+
+        toCurrencies = new JComboBox(currencies);
+        toCurrencies.setSelectedItem(currencies[1]);
+        centreContent.add(toCurrencies);
+
+        JLabel amount = new JLabel("<html>Enter the amount of money you want to convert:<br><br></html>");
+        centreContent.add(amount);
+
+        value = new JTextField(2);
+        centreContent.add(value);
+
+        result = new JLabel("<html>Result: </html>");
+        centreContent.add(result);
+
+        contentPane.add(centreContent, BorderLayout.CENTER);
+
+        JButton button = new JButton("<html><b>Convert</b></html>");
+        button.addMouseListener(this);
+        contentPane.add(button, BorderLayout.SOUTH);
     }
+
 
     public static void main(String[] args) 
     {
         new Convert();
-    } 
+    }
+
+    // mousePressed method for currency conversion
+    @Override
+    public void mousePressed(java.awt.event.MouseEvent e) {
+        if (fromCurrencies.getSelectedItem() ==  toCurrencies.getSelectedItem()) 
+        {
+            result.setText("<html>Result: " + String.valueOf(value.getText()) 
+                + " </html>");
+        }
+
+        if (fromCurrencies.getSelectedItem() == "USD" && toCurrencies.getSelectedItem() == "GBP") 
+        {
+            result.setText("<html>Result: " + String.valueOf(Double.valueOf(value.getText()) * usd_gbp) 
+                        + " GBP</html>");
+        }
+
+        else if (fromCurrencies.getSelectedItem() == "GBP" && toCurrencies.getSelectedItem() == "USD") 
+        {
+            result.setText("<html>Result: $" + String.valueOf(Double.valueOf(value.getText()) * gbp_usd) 
+                + "</html>");
+        }
+
+        else if (fromCurrencies.getSelectedItem() == "USD" && toCurrencies.getSelectedItem() == "EUR") 
+        {
+            result.setText("<html>Result: " + String.valueOf(Double.valueOf(value.getText()) * usd_eur) 
+                + " EUR</html>");
+        }
+
+        else if (fromCurrencies.getSelectedItem() == "GBP" && toCurrencies.getSelectedItem() == "EUR") 
+        {
+            result.setText("<html>Result: " + String.valueOf(Double.valueOf(value.getText()) * gbp_eur) 
+                + " EUR</html>");
+        }
+
+        else if (fromCurrencies.getSelectedItem() == "EUR" && toCurrencies.getSelectedItem() == "GBP") 
+        {
+            result.setText("<html>Result: " + String.valueOf(Double.valueOf(value.getText()) * eur_gbp) 
+                + " GBP</html>");
+        }
+
+        else if (fromCurrencies.getSelectedItem() == "EUR" && toCurrencies.getSelectedItem() == "USD") 
+        {
+            result.setText("<html>Result: $" + String.valueOf(Double.valueOf(value.getText()) * eur_usd) 
+                + "</html>");
+        }
+
+        else
+        {
+            result.setText
+                ("<html>Conversion failed, type a number or select two different currencies.</html>");
+        }
+
+    }
+
+    // other mouse methods from the implemented interface
+    @Override
+    public void mouseClicked(java.awt.event.MouseEvent e) {
+        // Auto-generated method stub
+        
+    }
+
+    @Override
+    public void mouseReleased(java.awt.event.MouseEvent e) {
+        // Auto-generated method stub
+        
+    }
+
+    @Override
+    public void mouseEntered(java.awt.event.MouseEvent e) {
+        // Auto-generated method stub
+        
+    }
+
+    @Override
+    public void mouseExited(java.awt.event.MouseEvent e) {
+        // Auto-generated method stub
+        
+    }
 }
