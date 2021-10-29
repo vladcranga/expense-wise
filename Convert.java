@@ -88,13 +88,13 @@ public class Convert extends JFrame implements MouseListener
     // mousePressed method for currency conversion
     @Override
     public void mousePressed(java.awt.event.MouseEvent e) {
-        if (fromCurrencies.getSelectedItem() ==  toCurrencies.getSelectedItem()) 
+        if (fromCurrencies.getSelectedItem().equals(toCurrencies.getSelectedItem())) 
         {
             result.setText("<html>Result: " + String.valueOf(value.getText()) 
                 + " </html>");
         }
 
-        if (fromCurrencies.getSelectedItem() == "USD" && toCurrencies.getSelectedItem() == "GBP") 
+        else if (fromCurrencies.getSelectedItem() == "USD" && toCurrencies.getSelectedItem() == "GBP") 
         {
             result.setText("<html>Result: " + String.valueOf(Double.valueOf(value.getText()) * usd_gbp) 
                         + " GBP</html>");
