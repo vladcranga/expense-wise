@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class Convert extends JFrame implements MouseListener
+public class Convert extends JFrame
 {
     // currency values
     double usd_gbp = 0.73;
@@ -75,7 +75,11 @@ public class Convert extends JFrame implements MouseListener
         contentPane.add(centreContent, BorderLayout.CENTER);
 
         JButton button = new JButton("<html><b>Convert</b></html>");
-        button.addMouseListener(this);
+        button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                buttonMouseClicked(evt);
+            }
+        });
         contentPane.add(button, BorderLayout.SOUTH);
     }
 
@@ -85,9 +89,8 @@ public class Convert extends JFrame implements MouseListener
         new Convert();
     }
 
-    // mousePressed method for currency conversion
-    @Override
-    public void mousePressed(java.awt.event.MouseEvent e) {
+    // mouse click method for currency conversion
+    public void buttonMouseClicked(java.awt.event.MouseEvent e) {
         if (fromCurrencies.getSelectedItem().equals(toCurrencies.getSelectedItem())) 
         {
             result.setText("<html>Result: " + String.valueOf(value.getText()) 
@@ -136,30 +139,5 @@ public class Convert extends JFrame implements MouseListener
                 ("<html>Conversion failed, type a number or select two different currencies.</html>");
         }
 
-    }
-
-    // other mouse methods from the implemented interface
-    @Override
-    public void mouseClicked(java.awt.event.MouseEvent e) {
-        // Auto-generated method stub
-        
-    }
-
-    @Override
-    public void mouseReleased(java.awt.event.MouseEvent e) {
-        // Auto-generated method stub
-        
-    }
-
-    @Override
-    public void mouseEntered(java.awt.event.MouseEvent e) {
-        // Auto-generated method stub
-        
-    }
-
-    @Override
-    public void mouseExited(java.awt.event.MouseEvent e) {
-        // Auto-generated method stub
-        
     }
 }
