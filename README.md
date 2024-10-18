@@ -43,6 +43,6 @@ mvn test
 - Icon: [Business and finance icons created by cah nggunung - Flaticon](https://www.flaticon.com/free-icons/business-and-finance).
 
 # License
-This project is licensed under the MIT License. See the LICENSE file for more details.
+This project is licensed under the [MIT License](https://opensource.org/license/MIT).
 
 ![example picture](example.png)
