@@ -1,1 +1,7 @@
+target/
+.mvn/
+*.log
+*.tmp
 *.class
+.vscode/
+api_key.txt
