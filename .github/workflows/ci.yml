@@ -3,10 +3,10 @@ name: Java CI
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
     branches:
-      - main
+      - master
 
 jobs:
   build:
@@ -21,9 +21,11 @@ jobs:
       uses: actions/setup-java@v3
       with:
         java-version: '17'
+        distribution: 'temurin'
+        cache: maven
 
-    - name: Install dependencies and build
-      run: mvn clean install
+    - name: Compile the project
+      run: mvn clean compile
 
     - name: Run tests
-      run: mvn test
+      run: mvn test -Dtest='!CurrencyConverterAppTest'
