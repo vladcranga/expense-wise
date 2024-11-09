@@ -1,0 +1,14 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: currency-converter
+
+api:
+  key:
+    path: api_key.txt
+
+currency:
+  codes:
+    path: currency_codes.txt  
