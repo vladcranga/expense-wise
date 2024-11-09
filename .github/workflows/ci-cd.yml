@@ -38,7 +38,7 @@ jobs:
       working-directory: ./frontend
       run: |
         npm install
-        npm test -- --watchAll=false
+        npm run test
         npm run build
 
     - name: Login to Docker Hub
