@@ -26,7 +26,7 @@ const CurrencySelect: React.FC<CurrencySelectProps> = ({ label, value, onChange,
   return (
     <div>
       <label htmlFor={`${label.toLowerCase()}-currency`} className="block font-medium">
-        {label}:
+        {label}
       </label>
       <select
         id={`${label.toLowerCase()}-currency`}

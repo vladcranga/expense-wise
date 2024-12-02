@@ -7,7 +7,8 @@ import { ConversionResult as ConversionResultType } from '../types';
 const CurrencyConverter: React.FC = () => {
   const [amount, setAmount] = useState<number>(0);
   const [fromCurrency, setFromCurrency] = useState<string>('USD');
-  const [toCurrency, setToCurrency] = useState<string>('EUR');
+  const baseCurrency = localStorage.getItem('baseCurrency') || 'EUR';
+  const [toCurrency, setToCurrency] = useState<string>(baseCurrency);
   const [conversionResult, setConversionResult] = useState<ConversionResultType | null>(null);
 
   const handleConvert = async () => {
@@ -25,28 +26,28 @@ const CurrencyConverter: React.FC = () => {
 
   return (
     <div className="bg-white p-8 max-w-md mx-auto rounded-lg shadow-lg mt-10 text-center">
-      <h1 className="text-4xl font-bold text-blue-700 mb-6">Currency Converter</h1>
       <div className="space-y-4">
-        <div className="flex flex-col items-center space-y-2">
+        <div className="flex flex-col items-center space-y-2 text-gray-700">
           <CurrencySelect
-            label="Convert From"
+            label="Convert From:"
             value={fromCurrency}
             onChange={setFromCurrency}
             className="w-full p-2 border rounded-md"
           />
           <CurrencySelect
-            label="Convert To"
+            label="Convert To:"
             value={toCurrency}
             onChange={setToCurrency}
             className="w-full p-2 border rounded-md"
           />
         </div>
         <div className="flex flex-col items-center space-y-2">
-          <label htmlFor="amount" className="text-lg font-semibold">
+          <label htmlFor="amount" className="text-lg text-gray-700">
             Amount:
           </label>
           <input
             type="number"
+            min="0"
             id="amount"
             value={amount}
             onChange={(e) => setAmount(parseFloat(e.target.value))}
