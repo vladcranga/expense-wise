@@ -1,6 +1,5 @@
-package com.vladcranga.currencyconverter;
+package com.vladcranga.currencyconverter.model;
 
-import com.vladcranga.currencyconverter.model.*;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
