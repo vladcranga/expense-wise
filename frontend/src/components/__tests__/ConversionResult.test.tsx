@@ -15,8 +15,10 @@ describe('ConversionResult', () => {
   it('renders conversion result correctly', () => {
     render(<ConversionResult result={mockResult} />);
 
+    expect(screen.getByText(/Result:/i)).toBeInTheDocument();
     expect(screen.getByText(/85.00 EUR/)).toBeInTheDocument();
-    expect(screen.getByText(/0.8500 EUR/)).toBeInTheDocument();
+    expect(screen.getByText(/Exchange Rate:/i)).toBeInTheDocument();
+    expect(screen.getByText(/1 USD = 0.8500 EUR/)).toBeInTheDocument();
   });
 
   it('formats numbers correctly', () => {
@@ -29,6 +31,30 @@ describe('ConversionResult', () => {
     render(<ConversionResult result={resultWithDecimals} />);
 
     expect(screen.getByText(/85.68 EUR/)).toBeInTheDocument();
-    expect(screen.getByText(/0.8568 EUR/)).toBeInTheDocument();
+    expect(screen.getByText(/1 USD = 0.8568 EUR/)).toBeInTheDocument();
+  });
+
+  it('handles large numbers correctly', () => {
+    const resultWithLargeNumbers = {
+      ...mockResult,
+      amount: 1000000,
+      convertedAmount: 850000
+    };
+
+    render(<ConversionResult result={resultWithLargeNumbers} />);
+
+    expect(screen.getByText(/850000.00 EUR/)).toBeInTheDocument();
+  });
+
+  it('handles zero values correctly', () => {
+    const resultWithZero = {
+      ...mockResult,
+      amount: 0,
+      convertedAmount: 0
+    };
+
+    render(<ConversionResult result={resultWithZero} />);
+
+    expect(screen.getByText(/0.00 EUR/)).toBeInTheDocument();
   });
 });
