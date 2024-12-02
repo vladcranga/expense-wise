@@ -4,6 +4,13 @@ server:
 spring:
   application:
     name: currency-converter
+  datasource:
+    url: jdbc:postgresql://localhost:5432/currencydb
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update  
 
 api:
   key:
