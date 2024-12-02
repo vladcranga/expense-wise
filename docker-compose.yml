@@ -9,11 +9,16 @@ services:
       - "8080:8080"
     environment:
       - API_KEY_FILE=/app/api_key.txt
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://host.docker.internal:5432/currencydb
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
     volumes:
       - ./api_key.txt:/app/api_key.txt
       - ./currency_codes.txt:/app/currency_codes.txt
     depends_on:
       - frontend
+    extra_hosts:
+      - "host.docker.internal:host-gateway"  # Allows connection to host PostgreSQL
 
   frontend:
     build:

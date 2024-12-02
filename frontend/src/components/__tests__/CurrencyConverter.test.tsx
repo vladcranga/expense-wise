@@ -25,7 +25,6 @@ describe('CurrencyConverter', () => {
   it('renders the currency converter form', async () => {
     render(<CurrencyConverter />);
     
-    expect(screen.getByText('Currency Converter')).toBeInTheDocument();
     expect(screen.getByLabelText(/Convert From:/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Convert To:/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Amount:/i)).toBeInTheDocument();

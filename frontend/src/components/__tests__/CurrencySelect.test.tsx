@@ -26,13 +26,13 @@ describe('CurrencySelect', () => {
       />
     );
 
-    expect(screen.getByLabelText(/Test Currency:/i)).toBeInTheDocument();
+    expect(screen.getByLabelText('Test Currency')).toBeInTheDocument();
     
     await waitFor(() => {
       expect(getCurrencyCodes).toHaveBeenCalledTimes(1);
     });
 
-    const select = screen.getByLabelText(/Test Currency:/i);
+    const select = screen.getByLabelText('Test Currency');
     const options = Array.from(select.getElementsByTagName('option'));
     expect(options).toHaveLength(4);
   });
@@ -51,7 +51,7 @@ describe('CurrencySelect', () => {
       expect(getCurrencyCodes).toHaveBeenCalled();
     });
 
-    const select = screen.getByLabelText(/Test Currency:/i);
+    const select = screen.getByLabelText('Test Currency');
     await user.selectOptions(select, 'EUR');
 
     expect(mockOnChange).toHaveBeenCalledWith('EUR');

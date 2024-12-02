@@ -1,76 +1,142 @@
-# Java Currency Converter
+# ExpenseWise - Personal Budget Tracker
 
-A Java-based Currency Converter application that uses the ExchangeRate-API to provide real-time currency conversion rates. The backend is built using **Spring Boot**, while the frontend uses **React** (Vite).
+A full-stack expense tracking application built with Spring Boot and React. Track expenses, analyse spending patterns, and manage international transactions with a real-time currency converter.
+
+![ExpenseWise Main Page](/frontend/public/index_page.png)
 
 ## Features
-- Converts between multiple currencies including USD, GBP, EUR, and more.
-- Real-time exchange rates using [ExchangeRate-API](https://www.exchangerate-api.com/).
-- A modern web-based UI.
-- Backend API built with Java Spring Boot.
-- Frontend built with React using Vite.
-- Docker support.
 
-## Installation
+### 📊 Comprehensive Expense Tracking
+- **Expense Visualisation**: Pie chart showing expense distribution across categories
+![Pie Chart](/frontend/public/chart.png)
+- **Expense Categories**: Pre-defined categories for common expenses (Food, Transport, Bills, etc.)
+![Categories](/frontend/public/categories.png)
+- **Monthly Analysis**: Track and compare expenses across months
+![Monthly Analysis](/frontend/public/monthly_expenses.png)
+
+### 💰 Multi-Currency Support
+- **Currency Conversion**: Built-in converter for international expenses
+- **Base Currency Preference**: Set your preferred currency for consistent tracking
+- **Live Exchange Rates**: Powered by the [ExchangeRate API](https://www.exchangerate-api.com/) for accurate conversions, with the rates updated daily
+![Currency Converter](/frontend/public/converter.png)
+
+### 📱 Modern User Experience
+- **Real-time Updates**: Instant reflection of changes in charts and lists
+- **Intuitive Interface**: Clean UI with smooth interactions
+![Expense List](/frontend/public/expenses_list.png)
+
+## Technical Stack
+
+### Frontend
+- **React 18** with TypeScript, including **React Router** and **React-Toastify**
+- **Tailwind CSS** for modern styling
+- **Axios** for API communication
+- **Chart.js** for data visualisation
+
+### Backend
+- **Spring Boot 3.0**
+- **Spring Security** for authentication
+- **Spring Data JPA** with PostgreSQL
+- **Maven** for dependency management
+- **JUnit** for testing
+
+### DevOps & Tools
+- **Docker** & Docker Compose for containerization
+- **GitHub Actions** for CI/CD
+- **PostgreSQL** for user data storage
+
+## Getting Started
 
 ### Prerequisites
-- **Java Development Kit (JDK) 17 or higher**.
-- **Apache Maven 3.0 or higher**.
-- **Node.js and npm**.
-- An internet connection for fetching exchange rates.
-- A (free) ExchangeRate API key in `api_key.txt` in the backend directory.
+- **JDK 17 or higher**
+- **Apache Maven 3.0 or higher**
+- **Node.js and npm**
+- **PostgreSQL**, including a currency_db database
+```
+psql -U postgres
+CREATE DATABASE currency_db;
+```
+- An internet connection for fetching exchange rates
+- A (free) [ExchangeRate API](https://www.exchangerate-api.com/) key in `api_key.txt` in the root directory
 
-### Backend Setup
-1. In the root folder, install the dependencies and compile the project:
-   ```sh
-   mvn clean install
-   ```
-2. Run the backend server:
-   ```sh
-   mvn spring-boot:run
-   ```
-   It will run on `http://localhost:8080` by default.
+### Quick Start
 
-### Frontend Setup
-1. Navigate to the `frontend` folder:
-   ```sh
-   cd frontend
-   ```
-2. Install the dependencies using npm:
-   ```sh
-   npm install
-   ```
-3. Run the dev server:
-   ```sh
-   npm run dev
-   ```
-   It will run on `http://localhost:3000` by default.
+1. **Clone the repository**
+```bash
+git clone https://github.com/vladcranga/expense-wise.git
+cd expense-wise
+```
 
-### Running Tests
-- **Backend Tests**: From the root directory, run:
-  ```sh
-  mvn test
-  ```
-- **Frontend Tests**: From the `frontend` directory, run:
-  ```sh
-  npm test
-  ```
+2. **Backend Setup**
+```bash
+# Install the dependencies and compile
+mvn clean install
 
-## Docker Deployment
+# Start the Spring Boot application
+mvn spring-boot:run
+```
 
-1. Make sure **Docker** is installed on your machine.
-2. In the project root, use the provided `docker-compose.yml` file to build and run the entire stack:
-   ```sh
-   docker-compose up --build
-   ```
-   This will start both the backend (`http://localhost:8080`) and the frontend (`http://localhost:3000`).
+3. **Frontend Setup**
+```bash
+# Navigate to the frontend directory
+cd frontend
 
-## Notes
-- Make sure to set up an `api_key.txt` file containing only your key in the root directory.
+# Install the dependencies
+npm install
 
-# Credits
-- Icon: [Business and finance icons created by cah nggunung - Flaticon](https://www.flaticon.com/free-icons/business-and-finance).
+# Start the development server
+npm run dev
+```
 
-# License
+4. **Access the Application**
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:8080
+
+### Docker Setup
+```bash
+# Build and run with Docker Compose
+docker-compose up --build
+```
+
+## Running Tests
+
+### Backend Tests
+```bash
+# Run all the tests
+mvn test
+```
+
+### Frontend Tests
+```bash
+# Navigate to the frontend directory
+cd frontend
+
+# Run all the tests
+npm test
+```
+
+## API Documentation
+
+### Authentication Endpoints
+- `POST /api/v1/users/register` - Register a new user
+- `POST /api/v1/users/login` - User login
+- `POST /api/v1/users/logout` - User logout
+
+### Expense Endpoints
+- `GET /api/v1/expenses/{userId}` - Get user's expenses
+- `POST /api/v1/expenses` - Add new expense
+- `PUT /api/v1/expenses/{id}` - Update expense
+- `DELETE /api/v1/expenses/{id}` - Delete expense
+
+### Currency Endpoints
+- `GET /api/v1/currency/convert` - Convert amount between currencies
+- `GET /api/v1/currency/rates` - Get latest exchange rates
+
+## Contributing
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## Credits
+- Icon: [Business and finance icons created by Freepik - Flaticon](https://www.flaticon.com/free-icons/business-and-finance)
+
+## License
 This project is licensed under the [MIT License](https://opensource.org/license/MIT).
-
-![example picture](example.png)
