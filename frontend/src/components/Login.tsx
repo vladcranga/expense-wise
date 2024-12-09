@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import Footer from './Footer';
+import Footer from './shared/Footer';
 
 const Login: React.FC = () => {
     const [formData, setFormData] = useState({

@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import CurrencyConverter from './CurrencyConverter';
 import CategoryChart from './CategoryChart';
-import Footer from './Footer';
+import Footer from './shared/Footer';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -252,10 +251,10 @@ const BudgetTracker: React.FC = () => {
     return (
         <div className="min-h-screen flex flex-col">
             <div className="flex-grow">
-                {/* Expense Submission Form and Currency Converter */}
-                <div className="flex flex-col lg:flex-row space-y-8 lg:space-y-0 lg:space-x-8">
+                {/* Expense Submission Form and Month Selector with Graph */}
+                <div className="flex flex-row space-x-8">
                     {/* Expense Submission Form */}
-                    <div className="flex-grow bg-gray-100 p-4 rounded shadow">
+                    <div className="flex-1 bg-gray-100 p-4 rounded shadow">
                         <h2 className="text-2xl font-bold text-gray-700 mb-4 text-center">Add Expenses</h2>
                         <form onSubmit={handleSubmit} className="space-y-4 bg-white p-4 shadow rounded">
                             <div>
@@ -342,43 +341,37 @@ const BudgetTracker: React.FC = () => {
                             </button>
                         </form>
                     </div>
-                    {/* Currency Converter */}
-                    <div className="flex-grow bg-gray-100 p-4 rounded shadow">
-                        <h2 className="text-2xl font-bold text-gray-700 mb-4 text-center">Currency Converter</h2>
-                        <CurrencyConverter />
+                    {/* Month Selector and Graph */}
+                    <div className="flex-1 bg-gray-100 p-4 rounded shadow">
+                        <div className="flex justify-between items-center mb-4">
+                            <h2 className="text-2xl font-bold text-gray-700">Expenses by Category</h2>
+                            <select
+                                value={`${selectedMonth}-${selectedYear}`}
+                                onChange={handleMonthChange}
+                                className="px-4 py-2 border rounded-lg bg-white"
+                            >
+                                {last12Months.map(({ month, year, label }) => (
+                                    <option key={`${month}-${year}`} value={`${month}-${year}`}>
+                                        {label}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        {calculateMonthlyTotal() > 0 && (
+                            <p className="text-lg text-gray-700 mb-4 text-end">
+                                Your monthly expenses: {calculateMonthlyTotal().toFixed(2)} {displayCurrency}
+                            </p>
+                        )}
+                        {filteredExpenses.length > 0 ? (
+                            <CategoryChart expenses={filteredExpenses} />
+                        ) : (
+                            <p className="text-gray-500 text-center py-8">
+                                No expenses found for {new Date(
+                                    selectedYear, selectedMonth).toLocaleString(
+                                        'default', { month: 'long', year: 'numeric' })}.
+                            </p>
+                        )}
                     </div>
-                </div>
-
-                {/* Month Selector and Graph */}
-                <div className="bg-gray-100 p-4 rounded shadow">
-                    <div className="flex justify-between items-center mb-4">
-                        <h2 className="text-2xl font-bold text-gray-700">Expenses by Category</h2>
-                        <select
-                            value={`${selectedMonth}-${selectedYear}`}
-                            onChange={handleMonthChange}
-                            className="px-4 py-2 border rounded-lg bg-white"
-                        >
-                            {last12Months.map(({ month, year, label }) => (
-                                <option key={`${month}-${year}`} value={`${month}-${year}`}>
-                                    {label}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    {calculateMonthlyTotal() > 0 && (
-                        <p className="text-lg text-gray-700 mb-4 text-end">
-                            Your monthly expenses: {calculateMonthlyTotal().toFixed(2)} {displayCurrency}
-                        </p>
-                    )}
-                    {filteredExpenses.length > 0 ? (
-                        <CategoryChart expenses={filteredExpenses} />
-                    ) : (
-                        <p className="text-gray-500 text-center py-8">
-                            No expenses found for {new Date(
-                                selectedYear, selectedMonth).toLocaleString(
-                                    'default', { month: 'long', year: 'numeric' })}.
-                        </p>
-                    )}
                 </div>
 
                 {/* Expense List */}

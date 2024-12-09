@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import CurrencySelect from './CurrencySelect';
-import Footer from './Footer';
+import Footer from './shared/Footer';
 
 const Register: React.FC = () => {
     const [formData, setFormData] = useState({

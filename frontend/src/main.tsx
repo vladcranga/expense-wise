@@ -1,9 +1,11 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import './index.css'
 import App from './App.tsx'
-import Dashboard from './components/Dashboard';
+import DashboardLayout from './components/dashboard/DashboardLayout';
+import ExpensePage from './components/dashboard/ExpensePage';
+import ConverterPage from './components/dashboard/ConverterPage';
 import Register from './components/Register.tsx';
 import Login from './components/Login.tsx';
 import ProtectedRoute from './components/ProtectedRoute.tsx';
@@ -41,10 +43,14 @@ createRoot(document.getElementById('root')!).render(
           path="/dashboard"
           element={
             <ProtectedRoute>
-              <Dashboard />
+              <DashboardLayout />
             </ProtectedRoute>
           }
-        />
+        >
+          <Route index element={<Navigate to="/dashboard/expenses" replace />} />
+          <Route path="expenses" element={<ExpensePage />} />
+          <Route path="converter" element={<ConverterPage />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   </StrictMode>
