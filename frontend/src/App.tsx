@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import Footer from './components/shared/Footer';
 
 function App() {
   return (
@@ -213,13 +214,7 @@ function App() {
       </div>
 
       {/* Footer */}
-      <footer className="bg-gray-800 text-white py-8">
-        <div className="container mx-auto px-4 text-center">
-          <p className="text-gray-400">
-            A project by Vlad Mihai Cranga • Built with React and Spring Boot
-          </p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
