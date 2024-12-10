@@ -1,5 +1,6 @@
 import React from 'react';
 import CurrencyConverter from '../CurrencyConverter';
+import Footer from '../shared/Footer';
 
 const ConverterPage: React.FC = () => {
     return (
@@ -10,6 +11,7 @@ const ConverterPage: React.FC = () => {
                 </h1>
                 <CurrencyConverter />
             </div>
+            <Footer />
         </div>
     );
 };

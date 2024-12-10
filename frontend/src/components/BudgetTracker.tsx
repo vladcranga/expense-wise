@@ -383,7 +383,7 @@ const BudgetTracker: React.FC = () => {
                         <h2 className="text-2xl font-bold text-gray-700 mb-4">Your Expenses</h2>
                         <span
                             className={`transform transition-transform ${isExpenseListExpanded ? 'rotate-90' : ''
-                                }`}
+                                } text-2xl`}
                         >
                             ➤
                         </span>
