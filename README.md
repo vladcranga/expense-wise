@@ -20,10 +20,22 @@ A full-stack expense tracking application built with Spring Boot and React. Trac
 - **Live Exchange Rates**: Powered by the [ExchangeRate API](https://www.exchangerate-api.com/) for accurate conversions, with the rates updated daily
 ![Currency Converter](/frontend/public/converter.png)
 
+### 🧮 Built-in Calculator
+- Basic arithmetic operations
+- Calculation history
+![Calculator](/frontend/public/calculator.png)
+
 ### 📱 Modern User Experience
 - **Real-time Updates**: Instant reflection of changes in charts and lists
 - **Intuitive Interface**: Clean UI with smooth interactions
 ![Expense List](/frontend/public/expenses_list.png)
+
+## Architecture
+
+### Microservices
+- **Core Expense Service**: Main application service managing expense tracking
+- **Currency Converter Service**: Real-time currency conversion microservice
+- **Calculator Service**: Serverless calculator using AWS Lambda
 
 ## Technical Stack
 
@@ -58,6 +70,10 @@ CREATE DATABASE currency_db;
 ```
 - An internet connection for fetching exchange rates
 - A (free) [ExchangeRate API](https://www.exchangerate-api.com/) key in `api_key.txt` in the root directory
+- An AWS Lambda API URL in .env in the frontend directory
+```
+VITE_CALC_APP_API_URL=your_lambda_api_url
+```
 
 ### Quick Start
 

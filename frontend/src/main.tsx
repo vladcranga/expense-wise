@@ -6,6 +6,7 @@ import App from './App.tsx'
 import DashboardLayout from './components/dashboard/DashboardLayout';
 import ExpensePage from './components/dashboard/ExpensePage';
 import ConverterPage from './components/dashboard/ConverterPage';
+import CalculatorPage from './components/dashboard/CalculatorPage';
 import Register from './components/Register.tsx';
 import Login from './components/Login.tsx';
 import ProtectedRoute from './components/ProtectedRoute.tsx';
@@ -50,6 +51,7 @@ createRoot(document.getElementById('root')!).render(
           <Route index element={<Navigate to="/dashboard/expenses" replace />} />
           <Route path="expenses" element={<ExpensePage />} />
           <Route path="converter" element={<ConverterPage />} />
+          <Route path="calculator" element={<CalculatorPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
