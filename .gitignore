@@ -4,6 +4,7 @@ target/
 *.tmp
 *.class
 api_key.txt
+.env
 
 logs
 npm-debug.log*
