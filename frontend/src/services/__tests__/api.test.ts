@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { convertCurrency, getCurrencyCodes } from '../api';
+import axios from 'axios';
+import { convertCurrency, getCurrencyCodes, calculate } from '../api';
 import { ConversionRequest, ConversionResult } from '../../types';
 
 describe('API Services', () => {
@@ -97,4 +98,13 @@ describe('API Services', () => {
       await expect(getCurrencyCodes()).rejects.toThrow('HTTP error 500');
     });
   });
+
+  describe('Calculator', () => {
+    it('handles API errors', async () => {
+      const mockError = new Error('Failed API call.');
+      (axios.post as jest.Mock).mockRejectedValue(mockError);
+      await expect(calculate('+', 2, 3)).rejects.toThrow(mockError);
+    });
+  });
+
 });
