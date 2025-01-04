@@ -1,18 +1,18 @@
-import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom'
-import ConversionResult from '../ConversionResult';
+import { describe, it, expect } from "vitest";
+import { render, screen } from "@testing-library/react";
+import "@testing-library/jest-dom";
+import ConversionResult from "../ConversionResult";
 
-describe('ConversionResult', () => {
+describe("ConversionResult", () => {
   const mockResult = {
-    fromCurrency: 'USD',
-    toCurrency: 'EUR',
+    fromCurrency: "USD",
+    toCurrency: "EUR",
     amount: 100,
     convertedAmount: 85,
-    exchangeRate: 0.85
+    exchangeRate: 0.85,
   };
 
-  it('renders conversion result correctly', () => {
+  it("renders conversion result correctly", () => {
     render(<ConversionResult result={mockResult} />);
 
     expect(screen.getByText(/Result:/i)).toBeInTheDocument();
@@ -21,11 +21,11 @@ describe('ConversionResult', () => {
     expect(screen.getByText(/1 USD = 0.8500 EUR/)).toBeInTheDocument();
   });
 
-  it('formats numbers correctly', () => {
+  it("formats numbers correctly", () => {
     const resultWithDecimals = {
       ...mockResult,
       convertedAmount: 85.6789,
-      exchangeRate: 0.856789
+      exchangeRate: 0.856789,
     };
 
     render(<ConversionResult result={resultWithDecimals} />);
@@ -34,11 +34,11 @@ describe('ConversionResult', () => {
     expect(screen.getByText(/1 USD = 0.8568 EUR/)).toBeInTheDocument();
   });
 
-  it('handles large numbers correctly', () => {
+  it("handles large numbers correctly", () => {
     const resultWithLargeNumbers = {
       ...mockResult,
       amount: 1000000,
-      convertedAmount: 850000
+      convertedAmount: 850000,
     };
 
     render(<ConversionResult result={resultWithLargeNumbers} />);
@@ -46,11 +46,11 @@ describe('ConversionResult', () => {
     expect(screen.getByText(/850000.00 EUR/)).toBeInTheDocument();
   });
 
-  it('handles zero values correctly', () => {
+  it("handles zero values correctly", () => {
     const resultWithZero = {
       ...mockResult,
       amount: 0,
-      convertedAmount: 0
+      convertedAmount: 0,
     };
 
     render(<ConversionResult result={resultWithZero} />);
