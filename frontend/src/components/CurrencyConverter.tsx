@@ -1,26 +1,27 @@
-import React, { useState } from 'react';
-import CurrencySelect from './CurrencySelect';
-import ConversionResult from './ConversionResult';
-import { convertCurrency } from '../services/api';
-import { ConversionResult as ConversionResultType } from '../types';
+import React, { useState } from "react";
+import CurrencySelect from "./CurrencySelect";
+import ConversionResult from "./ConversionResult";
+import { convertCurrency } from "../services/api";
+import { ConversionResult as ConversionResultType } from "../types";
 
 const CurrencyConverter: React.FC = () => {
   const [amount, setAmount] = useState<number>(0);
-  const [fromCurrency, setFromCurrency] = useState<string>('USD');
-  const baseCurrency = localStorage.getItem('baseCurrency') || 'EUR';
+  const [fromCurrency, setFromCurrency] = useState<string>("USD");
+  const baseCurrency = localStorage.getItem("baseCurrency") || "EUR";
   const [toCurrency, setToCurrency] = useState<string>(baseCurrency);
-  const [conversionResult, setConversionResult] = useState<ConversionResultType | null>(null);
+  const [conversionResult, setConversionResult] =
+    useState<ConversionResultType | null>(null);
 
   const handleConvert = async () => {
     try {
       const result = await convertCurrency({
         fromCurrency,
         toCurrency,
-        amount
+        amount,
       });
       setConversionResult(result);
     } catch (error) {
-      console.error('Conversion failed:', error);
+      console.error("Conversion failed:", error);
     }
   };
 

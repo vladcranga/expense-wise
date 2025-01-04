@@ -1,18 +1,18 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import './index.css'
-import App from './App.tsx'
-import DashboardLayout from './components/dashboard/DashboardLayout';
-import ExpensePage from './components/dashboard/ExpensePage';
-import ConverterPage from './components/dashboard/ConverterPage';
-import CalculatorPage from './components/dashboard/CalculatorPage';
-import Register from './components/Register.tsx';
-import Login from './components/Login.tsx';
-import ProtectedRoute from './components/ProtectedRoute.tsx';
-import RedirectIfLoggedIn from './components/RedirectIfLoggedIn.tsx';
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import "./index.css";
+import App from "./App.tsx";
+import DashboardLayout from "./components/dashboard/DashboardLayout";
+import ExpensePage from "./components/dashboard/ExpensePage";
+import ConverterPage from "./components/dashboard/ConverterPage";
+import CalculatorPage from "./components/dashboard/CalculatorPage";
+import Register from "./components/Register.tsx";
+import Login from "./components/Login.tsx";
+import ProtectedRoute from "./components/ProtectedRoute.tsx";
+import RedirectIfLoggedIn from "./components/RedirectIfLoggedIn.tsx";
 
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
@@ -48,12 +48,15 @@ createRoot(document.getElementById('root')!).render(
             </ProtectedRoute>
           }
         >
-          <Route index element={<Navigate to="/dashboard/expenses" replace />} />
+          <Route
+            index
+            element={<Navigate to="/dashboard/expenses" replace />}
+          />
           <Route path="expenses" element={<ExpensePage />} />
           <Route path="converter" element={<ConverterPage />} />
           <Route path="calculator" element={<CalculatorPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
-  </StrictMode>
-)
+  </StrictMode>,
+);

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { getCurrencyCodes } from '../services/api';
+import React, { useState, useEffect } from "react";
+import { getCurrencyCodes } from "../services/api";
 
 interface CurrencySelectProps {
   label: string;
@@ -8,7 +8,12 @@ interface CurrencySelectProps {
   className?: string;
 }
 
-const CurrencySelect: React.FC<CurrencySelectProps> = ({ label, value, onChange, className }) => {
+const CurrencySelect: React.FC<CurrencySelectProps> = ({
+  label,
+  value,
+  onChange,
+  className,
+}) => {
   const [currencies, setCurrencies] = useState<string[]>([]);
 
   useEffect(() => {
@@ -17,7 +22,7 @@ const CurrencySelect: React.FC<CurrencySelectProps> = ({ label, value, onChange,
         const codes = await getCurrencyCodes();
         setCurrencies(codes);
       } catch (error) {
-        console.error('Error fetching currency codes:', error);
+        console.error("Error fetching currency codes:", error);
       }
     };
     fetchCurrencies();
@@ -25,7 +30,10 @@ const CurrencySelect: React.FC<CurrencySelectProps> = ({ label, value, onChange,
 
   return (
     <div>
-      <label htmlFor={`${label.toLowerCase()}-currency`} className="block font-medium">
+      <label
+        htmlFor={`${label.toLowerCase()}-currency`}
+        className="block font-medium"
+      >
         {label}
       </label>
       <select
