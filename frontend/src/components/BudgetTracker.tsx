@@ -50,8 +50,7 @@ const BudgetTracker: React.FC = () => {
 
   // Generate array of last 12 months
   const last12Months = Array.from({ length: 12 }, (_, i) => {
-    const date = new Date();
-    date.setMonth(currentMonth - i);
+    const date = new Date(currentYear, currentMonth - i, 1);
     return {
       month: date.getMonth(),
       year: date.getFullYear(),
