@@ -44,7 +44,7 @@ public class CurrencyService {
             
             return new ConversionResult(convertedAmount, conversionRate, fromCurrency, toCurrency);
         } catch (Exception e) {
-            throw new RuntimeException("Error during conversion: " + e.getMessage());
+            throw new RuntimeException("Error during conversion", e);
         }
     }
 
