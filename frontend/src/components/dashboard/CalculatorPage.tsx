@@ -28,24 +28,27 @@ const CalculatorPage: React.FC = () => {
     setHistory([]);
   };
 
-  const updateHistory = (
-    operationType: string,
-    num1: number,
-    num2: number | null,
-    result: number | string,
-  ) => {
-    const historyEntry =
-      num2 !== null
-        ? `${num1} ${operationType} ${num2} = ${result}`
-        : `${operationType}(${num1}) = ${result}`;
+  const updateHistory = useCallback(
+    (
+      operationType: string,
+      num1: number,
+      num2: number | null,
+      result: number | string,
+    ) => {
+      const historyEntry =
+        num2 !== null
+          ? `${num1} ${operationType} ${num2} = ${result}`
+          : `${operationType}(${num1}) = ${result}`;
 
-    setHistory((prevHistory) => {
-      const updatedHistory = [historyEntry, ...prevHistory];
-      return updatedHistory.length > MAX_HISTORY_SIZE
-        ? updatedHistory.slice(0, MAX_HISTORY_SIZE)
-        : updatedHistory;
-    });
-  };
+      setHistory((prevHistory) => {
+        const updatedHistory = [historyEntry, ...prevHistory];
+        return updatedHistory.length > MAX_HISTORY_SIZE
+          ? updatedHistory.slice(0, MAX_HISTORY_SIZE)
+          : updatedHistory;
+      });
+    },
+    [setHistory],
+  );
 
   const deleteNumber = useCallback(() => {
     setCurrent((prev) => prev.slice(0, -1));
@@ -59,48 +62,84 @@ const CalculatorPage: React.FC = () => {
     [current],
   );
 
+  const debouncedCalculate = useMemo(
+    () =>
+      debounce(
+        async (
+          current: string,
+          previous: string,
+          operation: Operation,
+          callbacks: {
+            setCurrent: (value: string) => void;
+            setPrevious: (value: string) => void;
+            setOperation: (value: Operation | undefined) => void;
+            updateHistory: (
+              op: string,
+              n1: number,
+              n2: number,
+              result: string,
+            ) => void;
+          },
+        ) => {
+          if (current === "" || previous === "") {
+            alert("Enter two numbers and an operation before calculating.");
+            return;
+          }
+
+          try {
+            const num1 = parseFloat(previous);
+            const num2 = parseFloat(current);
+            const result = await calculate(
+              operation as string,
+              num1.toString(),
+              num2.toString(),
+            );
+            const formattedResult = Number.isInteger(result)
+              ? result.toString()
+              : result.toFixed(3);
+
+            callbacks.setCurrent(formattedResult);
+            callbacks.setPrevious("");
+            callbacks.setOperation(undefined);
+            callbacks.updateHistory(
+              operation as string,
+              num1,
+              num2,
+              formattedResult,
+            );
+          } catch (error) {
+            console.error("Error during calculation:", error);
+          }
+        },
+        500,
+        { leading: true, trailing: true },
+      ),
+    [],
+  );
+
   const computeRegularOperation = useCallback(
-    debounce(async () => {
-      if (current === "" || previous === "") {
-        alert("Enter two numbers and an operation before calculating.");
-        return;
-      }
-
-      try {
-        const num1 = parseFloat(previous);
-        const num2 = parseFloat(current);
-        const result = await calculate(
-          operation as string,
-          num1.toString(),
-          num2.toString(),
-        );
-        const formattedResult = Number.isInteger(result)
-          ? result.toString()
-          : result.toFixed(3);
-
-        setCurrent(formattedResult);
-        setPrevious("");
-        setOperation(undefined);
-
-        updateHistory(operation as string, num1, num2, formattedResult);
-      } catch (error) {
-        console.error("Error during calculation:", error);
-      }
-    }, 500),
-    [current, previous, operation],
+    (current: string, previous: string, operation: Operation) => {
+      debouncedCalculate(current, previous, operation, {
+        setCurrent,
+        setPrevious,
+        setOperation,
+        updateHistory,
+      });
+    },
+    [debouncedCalculate, setCurrent, setPrevious, setOperation, updateHistory],
   );
 
   const chooseOperation = useCallback(
     (op: Operation) => {
       if (current === "") return;
       if (previous !== "") {
-        computeRegularOperation();
+        computeRegularOperation(current, previous, operation);
       }
       setOperation(op);
       setPrevious(current);
       setCurrent("");
     },
-    [current, previous, computeRegularOperation],
+    [current, previous, operation, computeRegularOperation],
   );
 
   const keyMap = useMemo(
@@ -122,14 +161,22 @@ const CalculatorPage: React.FC = () => {
       "*": () => chooseOperation("*"),
       "/": () => chooseOperation("/"),
       "%": () => chooseOperation("/"),
-      "=": () => computeRegularOperation(),
-      Enter: () => computeRegularOperation(),
+      "=": () => computeRegularOperation(current, previous, operation),
+      Enter: () => computeRegularOperation(current, previous, operation),
       Backspace: () => deleteNumber(),
       Delete: () => deleteNumber(),
       c: () => clear(),
       C: () => clear(),
     }),
-    [addNumber, chooseOperation, computeRegularOperation, deleteNumber],
+    [
+      addNumber,
+      chooseOperation,
+      computeRegularOperation,
+      deleteNumber,
+      current,
+      previous,
+      operation,
+    ],
   );
 
   useEffect(() => {
@@ -268,7 +315,9 @@ const CalculatorPage: React.FC = () => {
               </button>
 
               <button
-                onClick={computeRegularOperation}
+                onClick={() =>
+                  computeRegularOperation(current, previous, operation)
+                }
                 className="py-3 px-4 rounded-lg font-medium text-lg bg-green-500 text-white hover:bg-green-600 transition-all duration-200 shadow-sm hover:shadow-md col-span-4"
               >
                 =

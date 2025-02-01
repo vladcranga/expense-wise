@@ -11,7 +11,9 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",
-    "test:ci": "vitest run"
+    "test:ci": "vitest run",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "axios": "^1.7.7",
