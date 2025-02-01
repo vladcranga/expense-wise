@@ -1,9 +1,9 @@
-import { expect, afterEach, beforeEach, vi } from "vitest";
+import { expect, afterEach, beforeEach, vi, Mock } from "vitest";
 import { cleanup } from "@testing-library/react";
 import * as matchers from "@testing-library/jest-dom/matchers";
 import axios from "axios";
 
-// extends Vitest's expect method with methods from react-testing-library
+// Extend Vitest's expect method with methods from react-testing-library
 expect.extend(matchers);
 
 // Mock localStorage
@@ -36,13 +36,13 @@ beforeEach(() => {
   localStorageMock.clear.mockReset();
 
   // Reset axios mocks
-  (axios.get as any).mockReset();
-  (axios.post as any).mockReset();
-  (axios.put as any).mockReset();
-  (axios.delete as any).mockReset();
+  (axios.get as Mock<typeof axios.get>).mockReset();
+  (axios.post as Mock<typeof axios.post>).mockReset();
+  (axios.put as Mock<typeof axios.put>).mockReset();
+  (axios.delete as Mock<typeof axios.delete>).mockReset();
 });
 
-// runs a cleanup after each test case
+// Run a cleanup after each test case
 afterEach(() => {
   cleanup();
   vi.restoreAllMocks();

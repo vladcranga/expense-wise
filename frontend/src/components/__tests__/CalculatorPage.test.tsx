@@ -47,37 +47,33 @@ const useCalculatorState = () => {
       return;
     }
 
-    try {
-      const num1 = parseFloat(previous);
-      const num2 = parseFloat(current);
+    const num1 = parseFloat(previous);
+    const num2 = parseFloat(current);
 
-      if (operation === "÷" && num2 === 0) {
-        setCurrent("Cannot divide by zero");
-        return;
-      }
-
-      const result = await calculate(
-        operation as string,
-        num1.toString(),
-        num2.toString(),
-      );
-      const formattedResult = Number.isInteger(result)
-        ? result.toString()
-        : result.toFixed(3);
-
-      setCurrent(formattedResult);
-      setPrevious("");
-      setOperation(undefined);
-
-      setHistory((prev) =>
-        [`${num1} ${operation} ${num2} = ${formattedResult}`, ...prev].slice(
-          0,
-          10,
-        ),
-      );
-    } catch (error) {
-      throw error;
+    if (operation === "÷" && num2 === 0) {
+      setCurrent("Cannot divide by zero");
+      return;
     }
+
+    const result = await calculate(
+      operation as string,
+      num1.toString(),
+      num2.toString(),
+    );
+    const formattedResult = Number.isInteger(result)
+      ? result.toString()
+      : result.toFixed(3);
+
+    setCurrent(formattedResult);
+    setPrevious("");
+    setOperation(undefined);
+
+    setHistory((prev) =>
+      [`${num1} ${operation} ${num2} = ${formattedResult}`, ...prev].slice(
+        0,
+        10,
+      ),
+    );
   };
 
   return {

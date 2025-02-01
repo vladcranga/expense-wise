@@ -25,7 +25,7 @@ jobs:
     - name: Create API key file
       run: echo ${{ secrets.API_KEY }} > api_key.txt
 
-    - name: Install dependencies, build, and test backend
+    - name: Install dependencies, run tests and quality checks, and build backend
       run: |
         mvn clean verify
 
@@ -34,10 +34,12 @@ jobs:
       with:
         node-version: '20'
 
-    - name: Install frontend dependencies, test, and build
+    - name: Install frontend dependencies, lint, format, test, and build
       working-directory: ./frontend
       run: |
         npm install
+        npm run lint
+        npm run format:check
         npm run test:ci
         npm run build
 
