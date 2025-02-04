@@ -206,7 +206,7 @@ const BudgetTracker: React.FC = () => {
 
       await axios.put(
         `http://localhost:8080/api/v1/expenses/${editingExpense.id}`,
-        expenseToUpdate
+        expenseToUpdate,
       );
 
       // Update local state
@@ -238,8 +238,9 @@ const BudgetTracker: React.FC = () => {
   ) => {
     if (!editingExpense) return;
 
-    const value = e.target.name === 'amount' ? parseFloat(e.target.value) : e.target.value;
-    
+    const value =
+      e.target.name === "amount" ? parseFloat(e.target.value) : e.target.value;
+
     setEditingExpense({
       ...editingExpense,
       [e.target.name]: value,
