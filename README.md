@@ -63,11 +63,16 @@ A full-stack expense tracking application built with Spring Boot and React. Trac
 - **JDK 17 or higher**
 - **Apache Maven 3.0 or higher**
 - **Node.js and npm**
-- **PostgreSQL**, including a currency_db database
+- **PostgreSQL**, including a currencydb database
 ```
 psql -U postgres
-CREATE DATABASE currency_db;
+CREATE DATABASE currencydb;
 ```
+The schema.sql file can be found in `src/main/java/com/vladcranga/currencyconverter/database/schema.sql`. Run the following command to import it into your database, keeping in mind to replace `path_to_schema.sql` with your actual path to the file:
+```
+psql -U postgres -d currencydb -f path_to_schema.sql
+```
+
 - An internet connection for fetching exchange rates
 - A (free) [ExchangeRate API](https://www.exchangerate-api.com/) key in `api_key.txt` in the root directory
 - An AWS Lambda API URL in .env in the frontend directory
