@@ -94,16 +94,24 @@ const BudgetTracker: React.FC = () => {
 
   const formatDate = (date: string) => {
     if (date.includes("-")) {
-      return date;
+      const [year, month, day] = date.split("-");
+      return `${day}/${month}/${year}`;
     }
-    const [day, month, year] = date.split("/");
-    return `${year}-${month}-${day}`;
+    return date;
+  };
+
+  const formatDateForAPI = (date: string) => {
+    if (date.includes("/")) {
+      const [day, month, year] = date.split("/");
+      return `${year}-${month}-${day}`;
+    }
+    return date;
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const formattedDate = formatDate(formData.date);
+      const formattedDate = formatDateForAPI(formData.date);
       const expenseData = {
         description: formData.description,
         category: formData.category,
@@ -172,6 +180,7 @@ const BudgetTracker: React.FC = () => {
   const handleEditExpense = (expense: Expense) => {
     setEditingExpense({
       ...expense,
+      id: expense.id,
       isEditing: true,
     });
   };
@@ -181,22 +190,30 @@ const BudgetTracker: React.FC = () => {
   };
 
   const handleUpdateExpense = async () => {
-    if (!editingExpense) return;
+    if (!editingExpense || !editingExpense.id) return;
 
     try {
+      const formattedDate = formatDateForAPI(editingExpense.date);
+      const expenseToUpdate = {
+        id: editingExpense.id,
+        description: editingExpense.description,
+        category: editingExpense.category,
+        amount: editingExpense.amount,
+        currency: editingExpense.currency,
+        date: formattedDate,
+        userId,
+      };
+
       await axios.put(
         `http://localhost:8080/api/v1/expenses/${editingExpense.id}`,
-        {
-          ...editingExpense,
-          userId,
-        },
+        expenseToUpdate,
       );
 
       // Update local state
       setExpenses((prevExpenses) =>
         prevExpenses.map((expense) =>
           expense.id === editingExpense.id
-            ? { ...editingExpense, isEditing: false }
+            ? { ...expenseToUpdate, isEditing: false }
             : expense,
         ),
       );
@@ -221,9 +238,12 @@ const BudgetTracker: React.FC = () => {
   ) => {
     if (!editingExpense) return;
 
+    const value =
+      e.target.name === "amount" ? parseFloat(e.target.value) : e.target.value;
+
     setEditingExpense({
       ...editingExpense,
-      [e.target.name]: e.target.value,
+      [e.target.name]: value,
     });
   };
 
@@ -503,7 +523,7 @@ const BudgetTracker: React.FC = () => {
                             {expense.amount} {expense.currency}
                           </p>
                           <p className="text-sm text-gray-600">
-                            {new Date(expense.date).toLocaleDateString()}
+                            {formatDate(expense.date)}
                           </p>
                         </div>
                         <div className="flex space-x-2">
