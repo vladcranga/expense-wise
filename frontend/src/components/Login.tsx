@@ -98,7 +98,13 @@ const Login: React.FC = () => {
             </div>
           </form>
           {message && (
-            <div className="mt-4 p-4 bg-red-100 text-red-700 rounded-lg text-center">
+            <div
+              className={`mt-4 p-4 rounded-lg text-center ${
+                message.toLowerCase().includes("successful")
+                  ? "bg-green-100 text-green-700"
+                  : "bg-red-100 text-red-700"
+              }`}
+            >
               {message}
             </div>
           )}
