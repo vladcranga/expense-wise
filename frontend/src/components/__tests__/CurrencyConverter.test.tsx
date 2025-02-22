@@ -12,14 +12,10 @@ vi.mock("../../services/api", () => ({
 describe("CurrencyConverter", () => {
   beforeEach(() => {
     vi.resetAllMocks();
-    (
-      getCurrencyCodes as unknown as jest.MockedFunction<
-        typeof getCurrencyCodes
-      >
-    ).mockResolvedValue(["USD", "EUR", "GBP", "JPY"]);
-    (
-      convertCurrency as unknown as jest.MockedFunction<typeof convertCurrency>
-    ).mockResolvedValue({
+    (getCurrencyCodes as unknown as jest.MockedFunction<typeof getCurrencyCodes>).mockResolvedValue(
+      ["USD", "EUR", "GBP", "JPY"],
+    );
+    (convertCurrency as unknown as jest.MockedFunction<typeof convertCurrency>).mockResolvedValue({
       fromCurrency: "USD",
       toCurrency: "EUR",
       convertedAmount: 85,
@@ -33,9 +29,7 @@ describe("CurrencyConverter", () => {
     expect(screen.getByLabelText(/Convert From:/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Convert To:/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Amount:/i)).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: /convert/i }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /convert/i })).toBeInTheDocument();
   });
 
   it("performs currency conversion when form is submitted", async () => {
@@ -65,9 +59,9 @@ describe("CurrencyConverter", () => {
 
   it("handles API errors gracefully", async () => {
     const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
-    (
-      convertCurrency as unknown as jest.MockedFunction<typeof convertCurrency>
-    ).mockRejectedValue(new Error("API Error"));
+    (convertCurrency as unknown as jest.MockedFunction<typeof convertCurrency>).mockRejectedValue(
+      new Error("API Error"),
+    );
 
     const user = userEvent.setup();
     render(<CurrencyConverter />);

@@ -27,9 +27,7 @@ const CATEGORY_COLORS: Record<string, string> = {
 };
 
 const CategoryChart: React.FC<Props> = ({ expenses }) => {
-  const aggregateExpensesByCategory = (
-    expenses: Expense[],
-  ): Record<string, number> => {
+  const aggregateExpensesByCategory = (expenses: Expense[]): Record<string, number> => {
     const categoryTotals: Record<string, number> = {};
 
     expenses.forEach((expense) => {
@@ -69,9 +67,7 @@ const CategoryChart: React.FC<Props> = ({ expenses }) => {
           <Pie data={data} />
         </>
       ) : (
-        <p className="text-center text-red-500">
-          No expenses available to generate the chart.
-        </p>
+        <p className="text-center text-red-500">No expenses available to generate the chart.</p>
       )}
     </div>
   );

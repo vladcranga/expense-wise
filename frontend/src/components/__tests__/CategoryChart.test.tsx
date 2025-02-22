@@ -37,9 +37,7 @@ describe("CategoryChart", () => {
 
   it("shows no data message when expenses array is empty", () => {
     render(<CategoryChart expenses={[]} />);
-    expect(
-      screen.getByText(/No expenses available to generate the chart/i),
-    ).toBeInTheDocument();
+    expect(screen.getByText(/No expenses available to generate the chart/i)).toBeInTheDocument();
   });
 
   it("aggregates expenses by category correctly", () => {

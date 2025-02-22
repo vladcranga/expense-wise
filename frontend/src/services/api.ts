@@ -3,19 +3,14 @@ import { ConversionRequest, ConversionResult } from "../types";
 
 const CALC_API_URL = import.meta.env.VITE_CALC_APP_API_URL;
 
-export const convertCurrency = async (
-  request: ConversionRequest,
-): Promise<ConversionResult> => {
-  const response = await fetch(
-    "http://localhost:8080/api/v1/currency/convert",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(request),
+export const convertCurrency = async (request: ConversionRequest): Promise<ConversionResult> => {
+  const response = await fetch("http://localhost:8080/api/v1/currency/convert", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
     },
-  );
+    body: JSON.stringify(request),
+  });
 
   if (!response.ok) {
     throw new Error(`HTTP error ${response.status}`);

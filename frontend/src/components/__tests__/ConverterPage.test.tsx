@@ -5,11 +5,7 @@ import ConverterPage from "../dashboard/ConverterPage";
 
 // Mock the CurrencyConverter component
 vi.mock("../CurrencyConverter", () => ({
-  default: () => (
-    <div data-testid="mock-currency-converter">
-      Currency Converter Component
-    </div>
-  ),
+  default: () => <div data-testid="mock-currency-converter">Currency Converter Component</div>,
 }));
 
 // Mock localStorage

@@ -16,11 +16,7 @@
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module",
-    "project": [
-      "./tsconfig.json",
-      "./tsconfig.app.json",
-      "./tsconfig.node.json"
-    ],
+    "project": ["./tsconfig.json", "./tsconfig.app.json", "./tsconfig.node.json"],
     "ecmaFeatures": {
       "jsx": true
     }
@@ -30,10 +26,7 @@
     "@typescript-eslint/no-explicit-any": "warn",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "react-refresh/only-export-components": [
-      "warn",
-      { "allowConstantExport": true }
-    ],
+    "react-refresh/only-export-components": ["warn", { "allowConstantExport": true }],
     "react/prop-types": "off"
   },
   "settings": {

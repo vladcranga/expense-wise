@@ -8,12 +8,7 @@ interface CurrencySelectProps {
   className?: string;
 }
 
-const CurrencySelect: React.FC<CurrencySelectProps> = ({
-  label,
-  value,
-  onChange,
-  className,
-}) => {
+const CurrencySelect: React.FC<CurrencySelectProps> = ({ label, value, onChange, className }) => {
   const [currencies, setCurrencies] = useState<string[]>([]);
 
   useEffect(() => {
@@ -30,10 +25,7 @@ const CurrencySelect: React.FC<CurrencySelectProps> = ({
 
   return (
     <div>
-      <label
-        htmlFor={`${label.toLowerCase()}-currency`}
-        className="block font-medium"
-      >
+      <label htmlFor={`${label.toLowerCase()}-currency`} className="block font-medium">
         {label}
       </label>
       <select

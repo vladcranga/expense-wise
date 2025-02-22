@@ -13,21 +13,13 @@ describe("CurrencySelect", () => {
 
   beforeEach(() => {
     vi.resetAllMocks();
-    (
-      getCurrencyCodes as unknown as jest.MockedFunction<
-        typeof getCurrencyCodes
-      >
-    ).mockResolvedValue(["USD", "EUR", "GBP", "JPY"]);
+    (getCurrencyCodes as unknown as jest.MockedFunction<typeof getCurrencyCodes>).mockResolvedValue(
+      ["USD", "EUR", "GBP", "JPY"],
+    );
   });
 
   it("renders with label and fetches currency options", async () => {
-    render(
-      <CurrencySelect
-        label="Test Currency"
-        value="USD"
-        onChange={mockOnChange}
-      />,
-    );
+    render(<CurrencySelect label="Test Currency" value="USD" onChange={mockOnChange} />);
 
     expect(screen.getByLabelText("Test Currency")).toBeInTheDocument();
 
@@ -42,13 +34,7 @@ describe("CurrencySelect", () => {
 
   it("calls onChange when selection changes", async () => {
     const user = userEvent.setup();
-    render(
-      <CurrencySelect
-        label="Test Currency"
-        value="USD"
-        onChange={mockOnChange}
-      />,
-    );
+    render(<CurrencySelect label="Test Currency" value="USD" onChange={mockOnChange} />);
 
     await waitFor(() => {
       expect(getCurrencyCodes).toHaveBeenCalled();
@@ -62,19 +48,11 @@ describe("CurrencySelect", () => {
 
   it("handles API errors when fetching currencies", async () => {
     const consoleSpy = vi.spyOn(console, "error").mockImplementation(() => {});
-    (
-      getCurrencyCodes as unknown as jest.MockedFunction<
-        typeof getCurrencyCodes
-      >
-    ).mockRejectedValue(new Error("API Error"));
-
-    render(
-      <CurrencySelect
-        label="Test Currency"
-        value="USD"
-        onChange={mockOnChange}
-      />,
+    (getCurrencyCodes as unknown as jest.MockedFunction<typeof getCurrencyCodes>).mockRejectedValue(
+      new Error("API Error"),
     );
+
+    render(<CurrencySelect label="Test Currency" value="USD" onChange={mockOnChange} />);
 
     await waitFor(() => {
       expect(consoleSpy).toHaveBeenCalled();
