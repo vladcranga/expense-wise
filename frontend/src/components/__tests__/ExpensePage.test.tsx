@@ -5,9 +5,7 @@ import ExpensePage from "../dashboard/ExpensePage";
 
 // Mock the BudgetTracker component
 vi.mock("../BudgetTracker", () => ({
-  default: () => (
-    <div data-testid="mock-budget-tracker">Budget Tracker Component</div>
-  ),
+  default: () => <div data-testid="mock-budget-tracker">Budget Tracker Component</div>,
 }));
 
 // Mock localStorage

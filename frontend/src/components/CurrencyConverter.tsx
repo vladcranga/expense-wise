@@ -9,8 +9,7 @@ const CurrencyConverter: React.FC = () => {
   const [fromCurrency, setFromCurrency] = useState<string>("USD");
   const baseCurrency = localStorage.getItem("baseCurrency") || "EUR";
   const [toCurrency, setToCurrency] = useState<string>(baseCurrency);
-  const [conversionResult, setConversionResult] =
-    useState<ConversionResultType | null>(null);
+  const [conversionResult, setConversionResult] = useState<ConversionResultType | null>(null);
 
   const handleConvert = async () => {
     try {

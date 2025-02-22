@@ -48,10 +48,7 @@ createRoot(document.getElementById("root")!).render(
             </ProtectedRoute>
           }
         >
-          <Route
-            index
-            element={<Navigate to="/dashboard/expenses" replace />}
-          />
+          <Route index element={<Navigate to="/dashboard/expenses" replace />} />
           <Route path="expenses" element={<ExpensePage />} />
           <Route path="converter" element={<ConverterPage />} />
           <Route path="calculator" element={<CalculatorPage />} />

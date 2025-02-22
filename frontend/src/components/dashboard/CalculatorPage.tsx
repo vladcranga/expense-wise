@@ -29,12 +29,7 @@ const CalculatorPage: React.FC = () => {
   };
 
   const updateHistory = useCallback(
-    (
-      operationType: string,
-      num1: number,
-      num2: number | null,
-      result: number | string,
-    ) => {
+    (operationType: string, num1: number, num2: number | null, result: number | string) => {
       const historyEntry =
         num2 !== null
           ? `${num1} ${operationType} ${num2} = ${result}`
@@ -73,12 +68,7 @@ const CalculatorPage: React.FC = () => {
             setCurrent: (value: string) => void;
             setPrevious: (value: string) => void;
             setOperation: (value: Operation | undefined) => void;
-            updateHistory: (
-              op: string,
-              n1: number,
-              n2: number,
-              result: string,
-            ) => void;
+            updateHistory: (op: string, n1: number, n2: number, result: string) => void;
           },
         ) => {
           if (current === "" || previous === "") {
@@ -89,11 +79,7 @@ const CalculatorPage: React.FC = () => {
           try {
             const num1 = parseFloat(previous);
             const num2 = parseFloat(current);
-            const result = await calculate(
-              operation as string,
-              num1.toString(),
-              num2.toString(),
-            );
+            const result = await calculate(operation as string, num1.toString(), num2.toString());
             const formattedResult = Number.isInteger(result)
               ? result.toString()
               : result.toFixed(3);
@@ -101,12 +87,7 @@ const CalculatorPage: React.FC = () => {
             callbacks.setCurrent(formattedResult);
             callbacks.setPrevious("");
             callbacks.setOperation(undefined);
-            callbacks.updateHistory(
-              operation as string,
-              num1,
-              num2,
-              formattedResult,
-            );
+            callbacks.updateHistory(operation as string, num1, num2, formattedResult);
           } catch (error) {
             console.error("Error during calculation:", error);
           }
@@ -200,9 +181,7 @@ const CalculatorPage: React.FC = () => {
               <div className="text-right text-gray-600 text-base mb-1">
                 {previous} {operation}
               </div>
-              <div className="text-right text-xl font-semibold text-gray-800">
-                {current || "0"}
-              </div>
+              <div className="text-right text-xl font-semibold text-gray-800">{current || "0"}</div>
             </div>
 
             {/* Keypad */}
@@ -315,9 +294,7 @@ const CalculatorPage: React.FC = () => {
               </button>
 
               <button
-                onClick={() =>
-                  computeRegularOperation(current, previous, operation)
-                }
+                onClick={() => computeRegularOperation(current, previous, operation)}
                 className="py-3 px-4 rounded-lg font-medium text-lg bg-green-500 text-white hover:bg-green-600 transition-all duration-200 shadow-sm hover:shadow-md col-span-4"
               >
                 =
@@ -340,17 +317,12 @@ const CalculatorPage: React.FC = () => {
             </div>
             <div className="space-y-2">
               {history.map((entry, index) => (
-                <div
-                  key={index}
-                  className="p-2 bg-gray-50 rounded-lg text-gray-700 text-base"
-                >
+                <div key={index} className="p-2 bg-gray-50 rounded-lg text-gray-700 text-base">
                   {entry}
                 </div>
               ))}
               {history.length === 0 && (
-                <div className="text-gray-500 text-center py-4">
-                  No calculations yet
-                </div>
+                <div className="text-gray-500 text-center py-4">No calculations yet</div>
               )}
             </div>
           </div>

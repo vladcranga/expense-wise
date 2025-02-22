@@ -6,9 +6,7 @@ import axios from "axios";
 
 // Mock child components to avoid their initialization
 vi.mock("../CurrencyConverter", () => ({
-  default: () => (
-    <div data-testid="mock-currency-converter">Currency Converter</div>
-  ),
+  default: () => <div data-testid="mock-currency-converter">Currency Converter</div>,
 }));
 
 vi.mock("../CategoryChart", () => ({
@@ -57,9 +55,7 @@ describe("BudgetTracker", () => {
     render(<BudgetTracker />);
 
     await waitFor(() => {
-      expect(mockedAxios.get).toHaveBeenCalledWith(
-        "http://localhost:8080/api/v1/expenses/1",
-      );
+      expect(mockedAxios.get).toHaveBeenCalledWith("http://localhost:8080/api/v1/expenses/1");
     });
   });
 

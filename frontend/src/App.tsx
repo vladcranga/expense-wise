@@ -13,9 +13,8 @@ function App() {
               <span className="text-blue-500"> Finances</span>
             </h1>
             <p className="text-xl text-gray-600 mb-8">
-              In times of rising living costs, every penny counts. Track your
-              expenses, convert currencies, and make data-driven financial
-              decisions.
+              In times of rising living costs, every penny counts. Track your expenses, convert
+              currencies, and make data-driven financial decisions.
             </p>
             <div className="flex space-x-4">
               <Link
@@ -38,10 +37,7 @@ function App() {
           <div className="lg:w-1/2 flex justify-center">
             <div className="rounded-lg">
               <div className="w-full h-64 rounded-lg flex items-center justify-center">
-                <svg
-                  className="w-64 h-64 transform -rotate-90 scale-110"
-                  viewBox="0 0 100 100"
-                >
+                <svg className="w-64 h-64 transform -rotate-90 scale-110" viewBox="0 0 100 100">
                   <circle
                     cx="50"
                     cy="50"
@@ -101,12 +97,7 @@ function App() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="p-6 bg-blue-50 rounded-lg">
               <div className="text-blue-500 mb-4">
-                <svg
-                  className="w-12 h-12"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
+                <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -115,12 +106,10 @@ function App() {
                   />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold mb-2">
-                Global Economic Changes
-              </h3>
+              <h3 className="text-xl font-semibold mb-2">Global Economic Changes</h3>
               <p className="text-gray-600">
-                With Eurozone inflation at 2.3% and US core inflation at 2.8%
-                (November 2024), tracking expenses is more important than ever.
+                With Eurozone inflation at 2.3% and US core inflation at 2.8% (November 2024),
+                tracking expenses is more important than ever.
                 <span className="block text-xs mt-2 text-gray-500">
                   Sources:{" "}
                   <a
@@ -145,12 +134,7 @@ function App() {
             </div>
             <div className="p-6 bg-blue-50 rounded-lg">
               <div className="text-blue-500 mb-4">
-                <svg
-                  className="w-12 h-12"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
+                <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -159,22 +143,15 @@ function App() {
                   />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold mb-2">
-                International Spending
-              </h3>
+              <h3 className="text-xl font-semibold mb-2">International Spending</h3>
               <p className="text-gray-600">
-                With increasing global commerce, managing expenses across
-                different currencies is becoming essential.
+                With increasing global commerce, managing expenses across different currencies is
+                becoming essential.
               </p>
             </div>
             <div className="p-6 bg-blue-50 rounded-lg">
               <div className="text-blue-500 mb-4">
-                <svg
-                  className="w-12 h-12"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
+                <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -185,8 +162,8 @@ function App() {
               </div>
               <h3 className="text-xl font-semibold mb-2">Smart Budgeting</h3>
               <p className="text-gray-600">
-                Research shows that people who track their spending are more
-                likely to achieve their financial goals.
+                Research shows that people who track their spending are more likely to achieve their
+                financial goals.
                 <span className="block text-xs mt-2 text-gray-500">
                   Source:{" "}
                   <a
@@ -233,9 +210,7 @@ function App() {
               </svg>
             </div>
             <h3 className="text-xl font-semibold mb-2">Visual Analytics</h3>
-            <p className="text-gray-600">
-              Track your spending patterns with intuitive charts.
-            </p>
+            <p className="text-gray-600">Track your spending patterns with intuitive charts.</p>
           </div>
           <div className="flex flex-col items-center text-center">
             <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
@@ -275,9 +250,7 @@ function App() {
               </svg>
             </div>
             <h3 className="text-xl font-semibold mb-2">Monthly Tracking</h3>
-            <p className="text-gray-600">
-              Organise and review your expenses on a monthly basis.
-            </p>
+            <p className="text-gray-600">Organise and review your expenses on a monthly basis.</p>
           </div>
         </div>
       </div>

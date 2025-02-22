@@ -21,10 +21,7 @@ const Login: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/v1/users/login",
-        formData,
-      );
+      const response = await axios.post("http://localhost:8080/api/v1/users/login", formData);
       localStorage.setItem("isLoggedIn", "true");
       localStorage.setItem("username", formData.username);
       localStorage.setItem("userId", response.data.userId);
@@ -46,18 +43,11 @@ const Login: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 flex flex-col">
       <div className="flex-grow flex flex-col items-center justify-center px-4">
         <div className="max-w-md w-full">
-          <h1 className="text-4xl font-bold text-gray-800 mb-8 text-center">
-            Sign In
-          </h1>
+          <h1 className="text-4xl font-bold text-gray-800 mb-8 text-center">Sign In</h1>
 
-          <form
-            onSubmit={handleSubmit}
-            className="bg-white p-8 rounded-lg shadow-lg space-y-6"
-          >
+          <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg space-y-6">
             <div>
-              <label className="block text-gray-700 text-sm font-semibold mb-2">
-                Username
-              </label>
+              <label className="block text-gray-700 text-sm font-semibold mb-2">Username</label>
               <input
                 type="text"
                 name="username"
@@ -69,9 +59,7 @@ const Login: React.FC = () => {
               />
             </div>
             <div>
-              <label className="block text-gray-700 text-sm font-semibold mb-2">
-                Password
-              </label>
+              <label className="block text-gray-700 text-sm font-semibold mb-2">Password</label>
               <input
                 type="password"
                 name="password"

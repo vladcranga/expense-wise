@@ -24,9 +24,7 @@ const currentYear = currentDate.getFullYear();
 const currentMonth = currentDate.getMonth(); // 0-11
 
 const BudgetTracker: React.FC = () => {
-  const [baseCurrency, setBaseCurrency] = useState(
-    localStorage.getItem("baseCurrency") || "USD",
-  );
+  const [baseCurrency, setBaseCurrency] = useState(localStorage.getItem("baseCurrency") || "USD");
   const [formData, setFormData] = useState({
     description: "",
     category: "",
@@ -35,17 +33,12 @@ const BudgetTracker: React.FC = () => {
     date: "",
   });
   const [expenses, setExpenses] = useState<EditingExpense[]>([]);
-  const [filteredExpenses, setFilteredExpenses] = useState<EditingExpense[]>(
-    [],
-  );
+  const [filteredExpenses, setFilteredExpenses] = useState<EditingExpense[]>([]);
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
   const [selectedYear, setSelectedYear] = useState(currentYear);
   const [isExpenseListExpanded, setIsExpenseListExpanded] = useState(false);
-  const [editingExpense, setEditingExpense] = useState<EditingExpense | null>(
-    null,
-  );
-  const toggleExpenseList = () =>
-    setIsExpenseListExpanded(!isExpenseListExpanded);
+  const [editingExpense, setEditingExpense] = useState<EditingExpense | null>(null);
+  const toggleExpenseList = () => setIsExpenseListExpanded(!isExpenseListExpanded);
   const userId = localStorage.getItem("userId");
 
   // Generate array of last 12 months
@@ -66,10 +59,7 @@ const BudgetTracker: React.FC = () => {
         // Parse date string in YYYY-MM-DD format
         const [year, month] = expense.date.split("-");
         // Convert 1-based month to 0-based for comparison
-        return (
-          parseInt(month) - 1 === selectedMonth &&
-          parseInt(year) === selectedYear
-        );
+        return parseInt(month) - 1 === selectedMonth && parseInt(year) === selectedYear;
       })
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
     setFilteredExpenses(filtered);
@@ -83,9 +73,7 @@ const BudgetTracker: React.FC = () => {
   };
 
   // Handle form input changes
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-  ) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -121,10 +109,7 @@ const BudgetTracker: React.FC = () => {
         userId,
       };
 
-      const response = await axios.post(
-        "http://localhost:8080/api/v1/expenses",
-        expenseData,
-      );
+      const response = await axios.post("http://localhost:8080/api/v1/expenses", expenseData);
 
       // Create the new expense with all required fields
       const newExpense = {
@@ -212,9 +197,7 @@ const BudgetTracker: React.FC = () => {
       // Update local state
       setExpenses((prevExpenses) =>
         prevExpenses.map((expense) =>
-          expense.id === editingExpense.id
-            ? { ...expenseToUpdate, isEditing: false }
-            : expense,
+          expense.id === editingExpense.id ? { ...expenseToUpdate, isEditing: false } : expense,
         ),
       );
 
@@ -233,13 +216,10 @@ const BudgetTracker: React.FC = () => {
     }
   };
 
-  const handleEditInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
-  ) => {
+  const handleEditInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     if (!editingExpense) return;
 
-    const value =
-      e.target.name === "amount" ? parseFloat(e.target.value) : e.target.value;
+    const value = e.target.name === "amount" ? parseFloat(e.target.value) : e.target.value;
 
     setEditingExpense({
       ...editingExpense,
@@ -249,9 +229,7 @@ const BudgetTracker: React.FC = () => {
 
   const fetchExpenses = useCallback(async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:8080/api/v1/expenses/${userId}`,
-      );
+      const response = await axios.get(`http://localhost:8080/api/v1/expenses/${userId}`);
       setExpenses(response.data);
     } catch (error) {
       console.error("Error fetching expenses:", error);
@@ -279,10 +257,7 @@ const BudgetTracker: React.FC = () => {
       if (!expense?.date) return false;
       try {
         const [year, month] = expense.date.split("-");
-        return (
-          parseInt(month) - 1 === selectedMonth &&
-          parseInt(year) === selectedYear
-        );
+        return parseInt(month) - 1 === selectedMonth && parseInt(year) === selectedYear;
       } catch (error) {
         console.error("Error parsing date:", expense.date, error);
         return false;
@@ -291,10 +266,7 @@ const BudgetTracker: React.FC = () => {
 
     return currentMonthExpenses.reduce(
       (total, expense) =>
-        total +
-        (typeof expense.amount === "string"
-          ? parseFloat(expense.amount)
-          : expense.amount),
+        total + (typeof expense.amount === "string" ? parseFloat(expense.amount) : expense.amount),
       0,
     );
   }, [expenses, selectedMonth, selectedYear]);
@@ -306,13 +278,8 @@ const BudgetTracker: React.FC = () => {
         <div className="flex flex-row space-x-8">
           {/* Expense Submission Form */}
           <div className="flex-1 bg-gray-100 p-4 rounded shadow">
-            <h2 className="text-2xl font-bold text-gray-700 mb-4 text-center">
-              Add Expenses
-            </h2>
-            <form
-              onSubmit={handleSubmit}
-              className="space-y-4 bg-white p-4 shadow rounded"
-            >
+            <h2 className="text-2xl font-bold text-gray-700 mb-4 text-center">Add Expenses</h2>
+            <form onSubmit={handleSubmit} className="space-y-4 bg-white p-4 shadow rounded">
               <div>
                 <label className="text-gray-700">Description:</label>
                 <input
@@ -370,8 +337,8 @@ const BudgetTracker: React.FC = () => {
                   className="px-3 py-2 rounded border-0 focus:ring-0"
                 ></input>
                 <p className="w-full px-3 py-2 text-gray-700">
-                  Use the currency converter for expenses made outside of your
-                  base currency, {displayCurrency}.
+                  Use the currency converter for expenses made outside of your base currency,{" "}
+                  {displayCurrency}.
                 </p>
               </div>
               <div>
@@ -399,9 +366,7 @@ const BudgetTracker: React.FC = () => {
           {/* Month Selector and Graph */}
           <div className="flex-1 bg-gray-100 p-4 rounded shadow">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-2xl font-bold text-gray-700">
-                Expenses by Category
-              </h2>
+              <h2 className="text-2xl font-bold text-gray-700">Expenses by Category</h2>
               <select
                 value={`${selectedMonth}-${selectedYear}`}
                 onChange={handleMonthChange}
@@ -416,8 +381,7 @@ const BudgetTracker: React.FC = () => {
             </div>
             {calculateMonthlyTotal() > 0 && (
               <p className="text-lg text-gray-700 mb-4 text-end">
-                Your monthly expenses: {calculateMonthlyTotal().toFixed(2)}{" "}
-                {displayCurrency}
+                Your monthly expenses: {calculateMonthlyTotal().toFixed(2)} {displayCurrency}
               </p>
             )}
             {filteredExpenses.length > 0 ? (
@@ -425,10 +389,10 @@ const BudgetTracker: React.FC = () => {
             ) : (
               <p className="text-gray-500 text-center py-8">
                 No expenses found for{" "}
-                {new Date(selectedYear, selectedMonth).toLocaleString(
-                  "default",
-                  { month: "long", year: "numeric" },
-                )}
+                {new Date(selectedYear, selectedMonth).toLocaleString("default", {
+                  month: "long",
+                  year: "numeric",
+                })}
                 .
               </p>
             )}
@@ -441,9 +405,7 @@ const BudgetTracker: React.FC = () => {
             className="cursor-pointer flex justify-between items-center"
             onClick={toggleExpenseList}
           >
-            <h2 className="text-2xl font-bold text-gray-700 mb-4">
-              Your Expenses
-            </h2>
+            <h2 className="text-2xl font-bold text-gray-700 mb-4">Your Expenses</h2>
             <span
               className={`transform transition-transform ${
                 isExpenseListExpanded ? "rotate-90" : ""
@@ -516,15 +478,11 @@ const BudgetTracker: React.FC = () => {
                       <div className="flex justify-between items-center">
                         <div>
                           <p className="font-semibold">{expense.description}</p>
-                          <p className="text-sm text-gray-600">
-                            {expense.category}
-                          </p>
+                          <p className="text-sm text-gray-600">{expense.category}</p>
                           <p className="text-sm text-gray-600">
                             {expense.amount} {expense.currency}
                           </p>
-                          <p className="text-sm text-gray-600">
-                            {formatDate(expense.date)}
-                          </p>
+                          <p className="text-sm text-gray-600">{formatDate(expense.date)}</p>
                         </div>
                         <div className="flex space-x-2">
                           <button
@@ -547,10 +505,10 @@ const BudgetTracker: React.FC = () => {
               ) : (
                 <p className="text-gray-500 text-center py-4">
                   No expenses found for{" "}
-                  {new Date(selectedYear, selectedMonth).toLocaleString(
-                    "default",
-                    { month: "long", year: "numeric" },
-                  )}
+                  {new Date(selectedYear, selectedMonth).toLocaleString("default", {
+                    month: "long",
+                    year: "numeric",
+                  })}
                   .
                 </p>
               )}

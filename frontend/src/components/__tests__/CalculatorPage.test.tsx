@@ -55,24 +55,15 @@ const useCalculatorState = () => {
       return;
     }
 
-    const result = await calculate(
-      operation as string,
-      num1.toString(),
-      num2.toString(),
-    );
-    const formattedResult = Number.isInteger(result)
-      ? result.toString()
-      : result.toFixed(3);
+    const result = await calculate(operation as string, num1.toString(), num2.toString());
+    const formattedResult = Number.isInteger(result) ? result.toString() : result.toFixed(3);
 
     setCurrent(formattedResult);
     setPrevious("");
     setOperation(undefined);
 
     setHistory((prev) =>
-      [`${num1} ${operation} ${num2} = ${formattedResult}`, ...prev].slice(
-        0,
-        10,
-      ),
+      [`${num1} ${operation} ${num2} = ${formattedResult}`, ...prev].slice(0, 10),
     );
   };
 

@@ -43,11 +43,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, toggleSidebar }) => {
         className="p-3 hover:bg-white/50 self-end text-gray-600
                 hover:text-gray-800 transition-colors"
       >
-        {isCollapsed ? (
-          <IoChevronForwardOutline size={24} />
-        ) : (
-          <IoChevronBackOutline size={24} />
-        )}
+        {isCollapsed ? <IoChevronForwardOutline size={24} /> : <IoChevronBackOutline size={24} />}
       </button>
 
       {/* Navigation Links */}

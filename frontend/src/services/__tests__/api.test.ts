@@ -23,9 +23,7 @@ describe("API Services", () => {
         exchangeRate: 0.85,
       };
 
-      (
-        global.fetch as unknown as jest.MockedFunction<typeof global.fetch>
-      ).mockResolvedValueOnce({
+      (global.fetch as unknown as jest.MockedFunction<typeof global.fetch>).mockResolvedValueOnce({
         ok: true,
         status: 200,
         statusText: "OK",
@@ -43,23 +41,18 @@ describe("API Services", () => {
 
       const result = await convertCurrency(request);
 
-      expect(global.fetch).toHaveBeenCalledWith(
-        "http://localhost:8080/api/v1/currency/convert",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(request),
+      expect(global.fetch).toHaveBeenCalledWith("http://localhost:8080/api/v1/currency/convert", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify(request),
+      });
       expect(result).toEqual(mockResponse);
     });
 
     it("handles API errors", async () => {
-      (
-        global.fetch as unknown as jest.MockedFunction<typeof global.fetch>
-      ).mockResolvedValueOnce({
+      (global.fetch as unknown as jest.MockedFunction<typeof global.fetch>).mockResolvedValueOnce({
         ok: false,
         status: 500,
         statusText: "Internal Server Error",
@@ -79,9 +72,7 @@ describe("API Services", () => {
     it("fetches currency codes correctly", async () => {
       const mockCurrencies = ["USD", "EUR", "GBP", "JPY"];
 
-      (
-        global.fetch as unknown as jest.MockedFunction<typeof global.fetch>
-      ).mockResolvedValueOnce({
+      (global.fetch as unknown as jest.MockedFunction<typeof global.fetch>).mockResolvedValueOnce({
         ok: true,
         status: 200,
         statusText: "OK",
@@ -93,16 +84,12 @@ describe("API Services", () => {
 
       const result = await getCurrencyCodes();
 
-      expect(global.fetch).toHaveBeenCalledWith(
-        "http://localhost:8080/api/v1/currency/codes",
-      );
+      expect(global.fetch).toHaveBeenCalledWith("http://localhost:8080/api/v1/currency/codes");
       expect(result).toEqual(mockCurrencies);
     });
 
     it("handles API errors", async () => {
-      (
-        global.fetch as unknown as jest.MockedFunction<typeof global.fetch>
-      ).mockResolvedValueOnce({
+      (global.fetch as unknown as jest.MockedFunction<typeof global.fetch>).mockResolvedValueOnce({
         ok: false,
         status: 500,
         statusText: "Internal Server Error",
