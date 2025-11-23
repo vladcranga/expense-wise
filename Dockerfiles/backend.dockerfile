@@ -7,7 +7,7 @@ COPY ../src ./src
 RUN mvn clean package -DskipTests
 
 # Create the runtime image
-FROM openjdk:17-jdk
+FROM eclipse-temurin:17-jdk
 WORKDIR /app
 COPY ../api_key.txt /app/api_key.txt
 COPY ../currency_codes.txt /app/currency_codes.txt
