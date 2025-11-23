@@ -29,7 +29,7 @@ describe("CurrencySelect", () => {
 
     const select = screen.getByLabelText("Test Currency");
     const options = Array.from(select.getElementsByTagName("option"));
-    expect(options).toHaveLength(4);
+    expect(options).toHaveLength(5);
   });
 
   it("calls onChange when selection changes", async () => {

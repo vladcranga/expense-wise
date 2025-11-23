@@ -111,18 +111,11 @@ const BudgetTracker: React.FC = () => {
 
       const response = await axios.post("http://localhost:8080/api/v1/expenses", expenseData);
 
-      // Create the new expense with all required fields
-      const newExpense = {
-        id: response.data.id,
-        description: formData.description,
-        category: formData.category,
-        amount: parseFloat(formData.amount),
-        currency: formData.currency,
-        date: formattedDate,
-      };
+      // Use the expense object returned from backend (includes generated ID)
+      const savedExpense = response.data;
 
       // Update expenses state with the new expense
-      setExpenses((prevExpenses) => [...prevExpenses, newExpense]);
+      setExpenses((prevExpenses) => [...prevExpenses, savedExpense]);
       setEditingExpense(null);
 
       // Reset form
@@ -163,8 +156,12 @@ const BudgetTracker: React.FC = () => {
   };
 
   const handleEditExpense = (expense: Expense) => {
+    // Ensure date is in YYYY-MM-DD format for the date input
+    const dateForInput = expense.date.includes("/") ? formatDateForAPI(expense.date) : expense.date;
+
     setEditingExpense({
       ...expense,
+      date: dateForInput,
       id: expense.id,
       isEditing: true,
     });
@@ -316,16 +313,35 @@ const BudgetTracker: React.FC = () => {
                 <input
                   type="number"
                   min="0"
+                  step="0.01"
                   name="amount"
                   value={formData.amount}
                   onKeyDown={(e) => {
-                    if (e.key === "-") {
+                    // Allow: backspace, delete, tab, escape, enter, and period
+                    if (
+                      [8, 9, 27, 13, 46, 110, 190].indexOf(e.keyCode) !== -1 ||
+                      // Allow: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+                      (e.keyCode === 65 && e.ctrlKey === true) ||
+                      (e.keyCode === 67 && e.ctrlKey === true) ||
+                      (e.keyCode === 86 && e.ctrlKey === true) ||
+                      (e.keyCode === 88 && e.ctrlKey === true) ||
+                      // Allow: home, end, left, right, up, down
+                      (e.keyCode >= 35 && e.keyCode <= 40)
+                    ) {
+                      return;
+                    }
+                    // Block: anything that's not a number (0-9)
+                    if (
+                      (e.shiftKey || e.keyCode < 48 || e.keyCode > 57) &&
+                      (e.keyCode < 96 || e.keyCode > 105)
+                    ) {
                       e.preventDefault();
                     }
                   }}
                   onChange={handleChange}
                   required
                   className="w-full px-3 py-2 border rounded"
+                  placeholder="e.g., 10.50"
                 />
               </div>
               <div>
@@ -446,9 +462,33 @@ const BudgetTracker: React.FC = () => {
                         </select>
                         <input
                           type="number"
+                          min="0"
+                          step="0.01"
                           name="amount"
                           value={editingExpense.amount}
                           onChange={handleEditInputChange}
+                          onKeyDown={(e) => {
+                            // Allow: backspace, delete, tab, escape, enter, and period
+                            if (
+                              [8, 9, 27, 13, 46, 110, 190].indexOf(e.keyCode) !== -1 ||
+                              // Allow: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+                              (e.keyCode === 65 && e.ctrlKey === true) ||
+                              (e.keyCode === 67 && e.ctrlKey === true) ||
+                              (e.keyCode === 86 && e.ctrlKey === true) ||
+                              (e.keyCode === 88 && e.ctrlKey === true) ||
+                              // Allow: home, end, left, right, up, down
+                              (e.keyCode >= 35 && e.keyCode <= 40)
+                            ) {
+                              return;
+                            }
+                            // Block: anything that's not a number (0-9)
+                            if (
+                              (e.shiftKey || e.keyCode < 48 || e.keyCode > 57) &&
+                              (e.keyCode < 96 || e.keyCode > 105)
+                            ) {
+                              e.preventDefault();
+                            }
+                          }}
                           className="w-full px-2 py-1 border rounded"
                         />
                         <input
