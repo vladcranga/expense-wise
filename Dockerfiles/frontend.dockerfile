@@ -9,3 +9,4 @@ RUN npm run build
 # Serve the built application
 FROM nginx:alpine
 COPY --from=build /app/dist /usr/share/nginx/html
+COPY ../nginx.conf /etc/nginx/conf.d/default.conf
