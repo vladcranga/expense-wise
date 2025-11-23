@@ -77,7 +77,11 @@ public class ExpenseControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(expense)))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Expense added successfully"));
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.userId").value(1))
+                .andExpect(jsonPath("$.amount").value(50.00))
+                .andExpect(jsonPath("$.currency").value("EUR"))
+                .andExpect(jsonPath("$.category").value("Transport"));
     }
 
     @Test
