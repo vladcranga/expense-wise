@@ -34,6 +34,9 @@ const CurrencySelect: React.FC<CurrencySelectProps> = ({ label, value, onChange,
         onChange={(e) => onChange(e.target.value)}
         className={`border rounded px-2 py-1 ${className}`}
       >
+        <option value="">
+          {currencies.length === 0 ? "Loading currencies..." : "Select a currency"}
+        </option>
         {currencies.map((currency) => (
           <option key={currency} value={currency}>
             {currency}

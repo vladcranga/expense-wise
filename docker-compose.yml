@@ -10,6 +10,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
+      - postgres_data:/var/lib/postgresql/data
       - ./src/main/java/com/vladcranga/currencyconverter/database/schema.sql:/docker-entrypoint-initdb.d/schema.sql
 
   backend:
@@ -36,3 +37,6 @@ services:
       dockerfile: Dockerfiles/frontend.dockerfile
     ports:
       - "3000:80"
+
+volumes:
+  postgres_data:

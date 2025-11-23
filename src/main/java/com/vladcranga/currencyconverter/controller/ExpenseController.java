@@ -21,9 +21,20 @@ import java.util.List;
 /**
  * REST controller for managing expenses.
  */
+
 @RestController
 @RequestMapping("/api/v1/expenses")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(
+    origins = "http://localhost:3000",
+    methods = {
+        org.springframework.web.bind.annotation.RequestMethod.GET,
+        org.springframework.web.bind.annotation.RequestMethod.POST,
+        org.springframework.web.bind.annotation.RequestMethod.PUT,
+        org.springframework.web.bind.annotation.RequestMethod.DELETE,
+        org.springframework.web.bind.annotation.RequestMethod.OPTIONS
+    },
+    allowedHeaders = "*"
+)
 public class ExpenseController {
     private final ExpenseRepository expenseRepository;
 
@@ -32,15 +43,15 @@ public class ExpenseController {
     }
 
     @PostMapping
-    public ResponseEntity<String> addExpense(@RequestBody @NonNull Expense expense) {
+    public ResponseEntity<?> addExpense(@RequestBody @NonNull Expense expense) {
         try {
             if (expense.getDate() == null) {
                 expense.setDate(LocalDate.now());
             }
             
             expense.setConvertedAmount(expense.getAmount());
-            expenseRepository.save(expense);
-            return ResponseEntity.ok("Expense added successfully");
+            Expense savedExpense = expenseRepository.save(expense);
+            return ResponseEntity.ok(savedExpense);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Error processing request: " + e.getMessage());
